@@ -1,0 +1,159 @@
+<html>
+  <head>
+    <title>To-Do-List</title>
+
+    <style>
+    body{
+  font-size: 1.5rem;
+  font-family: sans-serif;
+}
+#container{
+  width:500px;
+  height:auto;
+  margin:auto;
+  padding: 10px;
+}
+input{
+ 
+  border: 1px solid black;
+  border-right: none;
+  border-left: none;
+  border-collapse: collapse;
+}
+/*using id's to style different section */
+#description{
+  display: block;
+  width:100%;
+  height:80px;
+}
+
+#dropdown{
+  margin-top: 10px;
+  height:40px;
+  width:45%;
+  border: 1px solid black;
+  border-right: none;
+  border-left: none;
+}
+
+#date{
+  margin-top:10px;
+  width:45%;
+  height: 40px;
+}
+
+#add-task{
+  height:50px; 
+  width:200px;
+  color:white;
+  border: none;
+  background-color: black;
+  margin:10px;
+  font-size: 1.2rem;
+}
+/* Animation for todo container */
+@keyframes pulse {
+  0% {
+    -moz-box-shadow: 0 0 0 0 rgba(204,169,44, 0.4);
+    box-shadow: 0 0 0 0 rgba(204,169,44, 0.4);
+  }
+  70% {
+      -moz-box-shadow: 0 0 0 10px rgba(204,169,44, 0);
+      box-shadow: 0 0 0 30px rgba(204,169,44, 0);
+  }
+  100% {
+      -moz-box-shadow: 0 0 0 0 rgba(204,169,44, 0);
+      box-shadow: 0 0 0 0 rgba(204,169,44, 0);
+  }
+}
+/* Styling class list_item*/
+.list_item{
+  background-image: linear-gradient(to top left,lightblue,white);
+  padding:15px;
+  font-size:1rem;
+  width:100%;
+  height:100px;
+  border:1px dotted black;
+  border-radius: 1rem;
+  position: relative;
+  line-height: 1px;
+  margin-top: 5px;
+  animation: pulse 2s infinite;
+}
+#category_display{
+  height:30px;
+  width:90px;
+  background-color:red;
+  color: white;
+  text-align: center;
+  padding-top: 20px; 
+  border-radius: 1rem;
+  display:inline-block;
+  position: absolute;
+  right:10px;
+}
+
+.list_item h2{
+  display:inline-block;
+}
+
+
+#delete-task{
+  height:50px; 
+  width:200px;
+  color:white;
+  border: none;
+  background-color: red;
+  margin:10px;
+  font-size: 1.2rem;
+  position:absolute;
+  top: 295px;
+  left:750px;
+  
+}
+
+.checks{
+  height: 25px;
+  width: 20px;
+}
+    </style>
+
+    <script src="https://kit.fontawesome.com/997cc280fa.js"></script>
+  </head>
+
+  <body>
+    <div id="container">
+      <h1 style="text-align: center"><i class="fas fa-th-list"></i> To Do List</h1>
+      <form action="create-list" method="POST">
+        <label for="description">Description</label>
+        <input type="text" placeholder="What do you need to do?" name="description" required id="description">
+        <select id="dropdown" name="category">
+          <option value="Personal" id="option">Personal</option>
+          <option value="Work">Work</option>
+          <option value="Cleaning">Cleaning</option>
+          <option value="Others">Others</option>
+        </select>
+        <input type="date" name="date" required id="date"><br>
+        <button type="submit" id="add-task"><i class="fas fa-plus"></i> Add Task</button>
+      </form>
+      <div id="list-container">
+        <form action="delete-task" method="POST">
+          <button type="submit" id="delete-task"><i class="fas fa-trash-alt"></i> Delete</button>
+          <% for(let i of list){ %>
+          <div class="list_item">
+            <input type="checkbox" value="<%= i._id %>" style="margin-bottom:-10px" name="check<%= i._id %>"
+              class="checks">
+            <p>
+              <h2><%= i.description %></h2>
+              <div id="category_display"><%= i.category %></div>
+              <p><i class="far fa-calendar-alt"></i> <%= i.date %></p>
+            </p>
+          </div>
+          <% } %>
+        </form>
+      </div>
+    </div>
+
+  </body>
+
+</html>
